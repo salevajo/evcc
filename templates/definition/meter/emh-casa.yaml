@@ -1,0 +1,42 @@
+template: emh-casa
+products:
+  - brand: EMH metering
+    description:
+      generic: Smart Meter Gateway CASA
+requirements:
+  description:
+    de: Der Gateway-Zugang erfolgt lokal per LAN (z.B. `smgw.local`). Benutzername und Passwort erhält man vom Messstellenbetreiber. Die Zähler-ID (z.B. `1efr0123456789`) ist in den Gateway-URLs enthalten.
+    en: The gateway is accessed locally via LAN (e.g. `smgw.local`). Username and password are provided by your metering point operator. The meter ID (e.g. `1efr0123456789`) is part of the gateway URLs.
+params:
+  - name: usage
+    choice: ["grid"]
+  - name: host
+    example: smgw.local
+    default: smgw.local
+  - name: user
+    required: true
+  - name: password
+    required: true
+  - name: id
+    description:
+      de: Zähler-ID
+      en: Meter ID
+    example: 1efr0123456789
+    required: true
+  - name: interface
+    advanced: true
+    example: eth1
+    default: eth1
+  - name: poll_seconds
+    advanced: true
+    type: int
+    default: 300
+  - name: ipv4
+    advanced: true
+    default: 192.168.33.10/24
+render: |
+  type: emh
+  uri: https://{{ .host }}
+  user: {{ .user }}
+  password: {{ .password }}
+  id: {{ .id }}
